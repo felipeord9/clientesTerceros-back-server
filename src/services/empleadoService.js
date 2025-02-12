@@ -51,7 +51,7 @@ const sendMail = async (body) => {
       const mail = {
         /* from: 'Clientes@granlangostino.net', */
         from: 'oficialdecumplimiento@granlangostino.com',
-        to: 'felipeord9@gmail.com',
+        to: 'oficialdecumplimiento@granlangostino.com',
         subject: 'Nueva Solicitud',
         html: `<!DOCTYPE html>
         <html lang="en">
