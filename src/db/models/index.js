@@ -19,6 +19,8 @@ const { TipoFormulario, TipoFormularioSchema} = require('./tipoFormularioModel')
 const { CategoriaRechazo, CategoriaRechazoSchema} = require('./categoriaRechazoModel')
 const { Aprobados, AprobadosSchema} = require('./aprobadosModel')
 const { Rechazados, RechazadosSchema} = require('./rechazadosModel')
+const { Empleado, EmpleadoSchema} = require('./empleadoModel')
+const { Cargo, CargoSchema} = require('./cargosModel')
 
 function setupModels(sequelize) {
   Certificado.init(CertificadoSchema,Certificado.config(sequelize))
@@ -42,6 +44,8 @@ function setupModels(sequelize) {
   CategoriaRechazo.init(CategoriaRechazoSchema,CategoriaRechazo.config(sequelize))
   Aprobados.init(AprobadosSchema,Aprobados.config(sequelize))
   Rechazados.init(RechazadosSchema,Rechazados.config(sequelize))
+  Empleado.init(EmpleadoSchema,Empleado.config(sequelize))
+  Cargo.init(CargoSchema,Cargo.config(sequelize))
 
 
   Rechazados.associate(sequelize.models)
@@ -65,5 +69,7 @@ function setupModels(sequelize) {
   Ciudad.associate(sequelize.models)
   ResponsabilidadFiscal.associate(sequelize.models)
   Cliente.associate(sequelize.models)
+  Empleado.associate(sequelize.models)
+  Cargo.associate(sequelize.models)
 }
 module.exports = setupModels

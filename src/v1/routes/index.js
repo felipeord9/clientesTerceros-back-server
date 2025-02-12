@@ -23,6 +23,8 @@ const TipoFOrmularioRoutes = require('./tipoFormularioRoutes')
 const CategoriaRechazoRoutes = require('./categoriasRechazoRoutes')
 const AprobacionRoutes = require('./aprobacionRoutes')
 const RechazoRoutes = require('./rechazoRoutes')
+const EmpleadosRoutes = require('./empleadoRoutes')
+const CargoRoutes = require('./cargoRoutes')
 
 function routerApi(app) {
     const router = express.Router()
@@ -54,6 +56,9 @@ function routerApi(app) {
     router.use('/clientes',ClienteRoutes)
     router.use('/pre/aprovacion',PreAprovacionRoutes)
     router.use('/detalles',DetalleRoutes)
-    router.use('/clasificacion',ClasificacionRoutes)}
+    router.use('/clasificacion',ClasificacionRoutes)
+    router.use('/empleados',EmpleadosRoutes)
+    router.use('/cargos',CargoRoutes)
+}
 
 module.exports = routerApi
