@@ -21,6 +21,8 @@ const { Aprobados, AprobadosSchema} = require('./aprobadosModel')
 const { Rechazados, RechazadosSchema} = require('./rechazadosModel')
 const { Empleado, EmpleadoSchema} = require('./empleadoModel')
 const { Cargo, CargoSchema} = require('./cargosModel')
+const { Contrato, ContratoSchema } = require('./contratoModel')
+const { Estudio, EstudioSchema } = require('./estudioModel')
 
 function setupModels(sequelize) {
   Certificado.init(CertificadoSchema,Certificado.config(sequelize))
@@ -46,6 +48,8 @@ function setupModels(sequelize) {
   Rechazados.init(RechazadosSchema,Rechazados.config(sequelize))
   Empleado.init(EmpleadoSchema,Empleado.config(sequelize))
   Cargo.init(CargoSchema,Cargo.config(sequelize))
+  Contrato.init(ContratoSchema, Contrato.config(sequelize))
+  Estudio.init(EstudioSchema, Estudio.config(sequelize))
 
 
   Rechazados.associate(sequelize.models)
@@ -71,5 +75,8 @@ function setupModels(sequelize) {
   Cliente.associate(sequelize.models)
   Empleado.associate(sequelize.models)
   Cargo.associate(sequelize.models)
+  Contrato.associate(sequelize.models)
+  Estudio.associate(sequelize.models)
+
 }
 module.exports = setupModels

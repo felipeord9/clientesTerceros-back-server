@@ -9,6 +9,10 @@ const EmpleadoSchema={
         primaryKey:true,
         autoIncrement:true,
     },
+    estado:{
+        type:DataTypes.STRING,
+        allowNull:false,
+    },
     rowId:{
         type:DataTypes.STRING,
         allowNull:false,
@@ -37,6 +41,15 @@ const EmpleadoSchema={
         type:DataTypes.STRING,
         allowNull:true,
         field:'otros_nombres'
+    },
+    fechaNacimiento:{
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: "fecha_nacimiento",
+    },
+    genero:{
+        type:DataTypes.STRING,
+        allowNull:false,
     },
     numeroCelular:{
         type: DataTypes.STRING,
@@ -73,6 +86,20 @@ const EmpleadoSchema={
         type:DataTypes.STRING,
         allowNull:false,
     },
+    tipoContrato:{
+        type:DataTypes.STRING,
+        allowNull:false,
+    },
+    fechaInicio:{
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: "fecha_inicio",
+    },
+    fechaFinal:{
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: "fecha_final",
+    },
     docCedula:{
         type:DataTypes.INTEGER,
         allowNull:false,
@@ -88,6 +115,41 @@ const EmpleadoSchema={
         allowNull: false,
         field: "doc_infemp",
     },
+    docHV:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "doc_hv",
+    },
+    docEps:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "doc_eps",
+    },
+    docCajaCompensacion:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "doc_caja_compensacion",
+    },
+    docOtroSi:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "doc_otrosi",
+    },
+    docExaIngreso:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "doc_examen_ingreso",
+    },
+    docARL:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "doc_arl",
+    },
+    docEscolaridad:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "doc_escolaridad",
+    },
     docOtros:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -100,7 +162,7 @@ const EmpleadoSchema={
     },
     userName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'usuario_creador',
         /* references: {
           model: USER_TABLE,
@@ -117,7 +179,11 @@ const EmpleadoSchema={
 
 class Empleado extends Model{
     static associate(models){
-        /* this.belongsTo(models.User,{as:'user'}) */
+        this.hasMany(models.Estudio, {
+            as: "estudios",
+            foreignKey: "empleadoId",
+            onDelete: 'CASCADE'
+        });
     }
     static config(sequelize){
         return{

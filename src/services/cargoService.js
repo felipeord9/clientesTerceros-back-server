@@ -17,7 +17,12 @@ const findByCodigo = async (codigo)=>{
 }
 
 const create = async (body) =>{
-  const newCargo = models.cargo.create(body)
+  let numero = body.codigo.toString().padStart(3, '0');
+  const newCargo = models.cargo.create({
+    id: body.id,
+    codigo: numero,
+    description: body.description,
+  })
   return newCargo
 }
 

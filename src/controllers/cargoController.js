@@ -62,7 +62,7 @@ const updateCargo = async (req, res, next) => {
     const { params: { id }, body } = req
     const data = await CargoService.update(id, body)
 
-    res.json(200).json({
+    res.status(200).json({
       message: 'Updated',
       data
     })

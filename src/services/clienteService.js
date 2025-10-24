@@ -1,5 +1,6 @@
 const { models } = require("../libs/sequelize");
 const nodemailer = require('nodemailer');
+const { config } = require('../config/config')
 
 const find=()=>{
     const Clientes = models.Clientes.findAll()
@@ -80,13 +81,13 @@ const sendMail = async (body) => {
             port: 465,
             secure: true,
             auth: {
-            user: 'oficialdecumplimiento@granlangostino.com',
-            pass: 'Ofici4l@2024'
+            user: config.smtpEmail,
+            pass: config.smtpPassword
             }
         });
       const mail = {
         /* from: 'Clientes@granlangostino.net', */
-        from: 'oficialdecumplimiento@granlangostino.com',
+        from: config.smtpEmail,
         to: 'felipeord9@gmail.com',
         subject: 'Nueva Solicitud de Creación',
         html: `<!DOCTYPE html>
@@ -100,7 +101,7 @@ const sendMail = async (body) => {
               href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;700;900&display=swap"
               rel="stylesheet"
             />
-            <title>CERTIFICADO RETENCIÓN POR ICA</title>
+            <title>CREACIÓN DE CLIENTE</title>
             <style>
               body {
                 font-family: Arial, sans-serif;;
@@ -211,7 +212,7 @@ const sendMail = async (body) => {
                       <br/>
                       <p><strong>A continuación, encontrará un link que lo llevará a nuestra página web donde podrá
                       visualizar las solicitudes con más detalles</strong></p>
-                      <p>http://localhost:3000/solicitudes</p>
+                      <p>https://192.168.4.19:448/terceros</p>
                       <br/>
                     </td>
                   </tr>

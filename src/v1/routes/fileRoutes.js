@@ -265,6 +265,14 @@ router.get('/obtener-archivo/:carpeta/:archivo', (req, res) => {
 res.sendFile(rutaArchivo);
 });
 
+router.get('/archivo-empleado/:carpeta/:archivo', (req, res) => {
+  const { carpeta, archivo } = req.params;
+  const rutaArchivo = path.join('/GestionHumana/Empleados/', carpeta, archivo);
+  //const rutaArchivo = path.join('/aplicativoterceros/', carpeta, archivo);
+  // const rutaArchivo = path.join('/192.168.4.237/aplicativoterceros/',carpeta,archivo);
+  res.sendFile(rutaArchivo);
+});
+
 router.post('/employee', upload.fields([
   /* second form */
   { name: 'Cedula' },
@@ -338,7 +346,7 @@ if (!fs.existsSync(folderPath)) {
 
   // Ruta del recurso compartido en formato UNC (Uniform Naming Convention)
   //const rutaRecursoCompartido = '\\\\192.168.4.237\\aplicativoterceros';
-  const rutaRecursoCompartido = '/192.168.4.237/aplicativoterceros/';
+  const rutaRecursoCompartido = '\\\\192.168.4.237\\GestionHumana\\Empleados';
   // Ruta remota en el recurso compartido donde deseas guardar la carpeta
   const rutaRemota = `${rutaRecursoCompartido}\\${folderName}`;
 

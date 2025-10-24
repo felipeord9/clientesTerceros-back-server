@@ -25,6 +25,9 @@ const AprobacionRoutes = require('./aprobacionRoutes')
 const RechazoRoutes = require('./rechazoRoutes')
 const EmpleadosRoutes = require('./empleadoRoutes')
 const CargoRoutes = require('./cargoRoutes')
+const FileEmployeesRoutes = require('./fileEmployeesRoutes')
+const ContratoRoutes = require('./contratoRoutes')
+const EstudioRoutes = require('./estudioRoutes')
 
 function routerApi(app) {
     const router = express.Router()
@@ -48,6 +51,7 @@ function routerApi(app) {
     router.use('/categorias/rechazo', CategoriaRechazoRoutes)
 
     router.use('/uploadMultiple',FileRoutes)
+    router.use('/supportFiles', FileEmployeesRoutes)
 
     router.use('/Rechazo',RechazoRoutes)
     router.use('/aprobacion',AprobacionRoutes)
@@ -59,6 +63,8 @@ function routerApi(app) {
     router.use('/clasificacion',ClasificacionRoutes)
     router.use('/empleados',EmpleadosRoutes)
     router.use('/cargos',CargoRoutes)
+    router.use('/contratos',ContratoRoutes)
+    router.use('/estudios',EstudioRoutes)
 }
 
 module.exports = routerApi

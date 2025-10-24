@@ -10,7 +10,8 @@ const config = {
     smtpPort: process.env.SMTP_PORT,
     smtpEmail: process.env.SMTP_EMAIL,
     smtpPassword: process.env.SMTP_PASSWORD,
-    jwtSecret: process.env.JWT_SECRET
+    jwtSecret: process.env.JWT_SECRET,
+    empleadoUrl: process.env.EMPLEADO_URL,
 }
 
 module.exports = { config }

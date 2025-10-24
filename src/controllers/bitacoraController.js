@@ -72,7 +72,7 @@ const updateBitacora = async (req, res, next) => {
     const { params: { email }, body } = req
     const data = await BitacoraService.update(email, body)
 
-    res.json(200).json({
+    res.status(200).json({
       message: 'Updated',
       data
     })

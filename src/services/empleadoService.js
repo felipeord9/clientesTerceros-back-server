@@ -2,13 +2,23 @@ const { models } = require("../libs/sequelize");
 const nodemailer = require('nodemailer');
 const boom = require('@hapi/boom')
 const MailService = require('./mailService')
+const { config } = require("../config/config");
+const jwt = require("jsonwebtoken");
 
 const find=()=>{
-    const Empleados = models.Empleados.findAll()
+    const Empleados = models.Empleados.findAll({
+      include: [
+        "estudios"
+      ],
+    })
     return Empleados
 };
 const findOne = async (id) => {
-    const Empleado = await models.Empleados.findByPk(id)
+    const Empleado = await models.Empleados.findByPk(id, {
+      include: [
+        "estudios"
+      ],
+    })
   
     if(!Empleado) throw boom.notFound('Empleado no encontrado')
   
@@ -19,7 +29,10 @@ const findByCedula = async (cedula) => {
   const empleado = await models.Empleados.findOne({
     where:{
       rowId: cedula
-    }
+    },
+    include: [
+      "estudios"
+    ],
   })
   if(!empleado) throw boom.notFound('Empleado no encontrado')
   return empleado
@@ -39,19 +52,27 @@ const update = async (id, changes) => {
 
 const sendMail = async (body) => {
     try{
+      /* console.log(body) */
+      /* codigo */
+      console.log(`codigo: ${body.codigo}`)
+      const payload = {
+        id: body.codigo
+      }
+      const token = jwt.sign(payload, config.jwtSecret, { expiresIn: "24h" })
+
         const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: 'smtpout.secureserver.net',
             port: 465,
             secure: true,
             auth: {
-            user: 'oficialdecumplimiento@granlangostino.com',
-            pass: 'Ofici4l@2024'
+            user: config.smtpEmail,
+            pass: config.smtpPassword
             }
         });
       const mail = {
         /* from: 'Clientes@granlangostino.net', */
-        from: 'oficialdecumplimiento@granlangostino.com',
-        to: 'oficialdecumplimiento@granlangostino.com',
+        from: config.smtpEmail,
+        to: 'sistemas2@granlangostino.net',
         subject: 'Nueva Solicitud',
         html: `<!DOCTYPE html>
         <html lang="en">
@@ -64,7 +85,7 @@ const sendMail = async (body) => {
               href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;700;900&display=swap"
               rel="stylesheet"
             />
-            <title>Nuevo Registro de Empleado</title>
+            <title>Nuevo registro de empleado</title>
             <style>
               body {
                 font-family: Arial, sans-serif;;
@@ -159,7 +180,7 @@ const sendMail = async (body) => {
           <body>
             <div class="container">
               <div class="header">
-                <h1>¡Nueva Solicitud de Registro!</h1>
+                <h1>¡${body.type === 'creacion' ? 'Nueva' : 'Actualización de'} solicitud de registro!</h1>
               </div>
 
               <div class="invoice-details">
@@ -168,11 +189,11 @@ const sendMail = async (body) => {
                     <td>
                       <p><strong>Cordial saludo,</strong></p>
                       <br/>
-                      <p><strong>Se ha generado una nueva solicitud de registro de empleado: ${body.razonSocial}</strong></p>
+                      <p><strong>Se ha ${body.type === 'creacion' ? 'generado una nueva' : 'actualizado una' } solicitud de registro de empleado: ${body.razonSocial}, con número de identificación: ${body.rowId}</strong></p>
                       <br/>
-                      <p><strong>A continuación, encontrará un link que lo llevará a nuestra página web donde podrá
-                      visualizar las solicitudes con más detalles</strong></p>
-                      <p>http://localhost:3000/empleados</p>
+                      <div class="warning">
+                        <b>Para visualizar la información Ingresa aquí ${config.empleadoUrl}/${token}</b>                  
+                      </div>
                       <br/>
                     </td>
                   </tr>
@@ -219,7 +240,7 @@ const respuesta = async (body) => {
   try{
     const mail = {
       /* from: 'Clientes@granlangostino.net', */
-      from: 'oficialdecumplimiento@granlangostino.com',
+      from: config.smtpEmail,
       to: 'felipeord9@gmail.com',
       subject: 'Nuevo Cambio en su Solicitud',
       html: `<!DOCTYPE html>

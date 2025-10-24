@@ -10,6 +10,7 @@ const fsExtra = require('fs-extra');
 const nodemailer = require('nodemailer');
 const numeroALetras = require('numero-a-letras');
 const conversor = require('conversor-numero-a-letras-es-ar');
+const { config } = require('../config/config')
 
 const find = async () => {
   const certificados = await models.Certificado.findAll()
@@ -241,12 +242,12 @@ const sendCertificado = async (body)=>{
       console.log(`PDF generado en: ${res.filename}`);
       // Configura el transporte del correo electrónico
       const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: config.smtpHost,
           port: 465,
           secure: true,
           auth: {
-            user: 'oficialdecumplimiento@granlangostino.com',
-            pass: 'Ofici4l@2024'
+            user: config.smtpEmail,
+            pass: config.smtpPassword
           }
       });
 	console.log(`transportador creado: ${transporter}`);
@@ -419,7 +420,7 @@ const sendCertificado = async (body)=>{
       };
 	console.log('mensaje creado');
       const auto ={
-        from: 'oficialdecumplimiento@granlangostino.com',
+        from: config.smtpEmail,
         to: body.correoEmisor, // Coloca la dirección de correo del destinatario
         subject: 'Certificado de retención por ICA - El Gran Langostino S.A.S.',
         text: `Cordial saludo ${body.nombreTercero},
@@ -632,17 +633,17 @@ const certificadoRfte = async(body)=>{
       console.log(`PDF generado en: ${res.filename}`);
       // Configura el transporte del correo electrónico
       const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: config.smtpHost,
           port: 465,
           secure: true,
           auth: {
-            user: 'oficialdecumplimiento@granlangostino.com',
-            pass: 'Ofici4l@2024'
+            user: config.smtpEmail,
+            pass: config.smtpPassword
           }
       });
 	console.log(`transporte creado`);
       const message = {
-        from: 'oficialdecumplimiento@granlangostino.com',
+        from: config.smtpEmail,
         to: body.correoEnvio, // Coloca la dirección de correo del destinatario
         subject: 'Certificado de retención en la fuente - El Gran Langostino S.A.S.',
         text: `Cordial saludo ${body.nombreTercero},
@@ -1019,12 +1020,12 @@ const sendCertificadoIva = async (body)=>{
           port: 465,
           secure: true,
           auth: {
-            user: 'oficialdecumplimiento@granlangostino.com',
-            pass: 'Ofici4l@2024'
+            user: config.smtpEmail,
+            pass: config.smtpPassword
           }
       });
       const message = {
-        from: 'oficialdecumplimiento@granlangostino.com',
+        from: config.smtpEmail,
         to: body.correoEnvio, // Coloca la dirección de correo del destinatario
         subject: 'Certificado de retención por IVA - El Gran Langostino S.A.S.',
         text: `Cordial saludo ${body.nombreTercero},
