@@ -72,7 +72,8 @@ const sendMail = async (body) => {
       const mail = {
         /* from: 'Clientes@granlangostino.net', */
         from: config.smtpEmail,
-        to: 'sistemas2@granlangostino.net',
+        to: 'contabilidad3@granlangostino.net',
+        cc: 'recursoshumanos2@granlangostino.com, oficialdecumplimiento@granlangostino.com',
         subject: 'Nueva Solicitud',
         html: `<!DOCTYPE html>
         <html lang="en">
@@ -241,7 +242,8 @@ const respuesta = async (body) => {
     const mail = {
       /* from: 'Clientes@granlangostino.net', */
       from: config.smtpEmail,
-      to: 'felipeord9@gmail.com',
+      to: 'recursoshumanos2@granlangostino.com',
+      cc: 'contabilidad3@granlangostino.net, oficialdecumplimiento@granlangostino.com',
       subject: 'Nuevo Cambio en su Solicitud',
       html: `<!DOCTYPE html>
       <html lang="en">
