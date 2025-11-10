@@ -11,6 +11,7 @@ router
     .post('/send/mail',ProveedorController.send)
     .get('/:id',ProveedorController.findOneProveedor)
     .get('/numero/:cedula',ProveedorController.validar)
+    .get('/id/:id',ProveedorController.validarId)
     .patch('/update/:id',ProveedorController.updateProveedor)
     .delete('/:id',ProveedorController.deleteProveedor)
     .delete('/delete/:cedula', ProveedorController.deleteByCedula);

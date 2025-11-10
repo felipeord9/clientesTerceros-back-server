@@ -56,6 +56,12 @@ const validarCliente = async (cedula)=>{
     return cliente
 }
 
+const validarClienteId = async (id)=>{
+    const cliente = await models.Clientes.findByPk(id)
+    if(!cliente) throw boom.notFound('Cliente no encontrado')
+    return cliente
+}
+
 const remove = async(id)=>{
     const cliente = findOne(id)
     ;(await cliente).destroy(id)
@@ -75,6 +81,7 @@ const removeByCedula = async(cedula)=>{
 }
 
 const sendMail = async (body) => {
+  console.log(JSON.stringify(body))
     try{
         const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -85,10 +92,54 @@ const sendMail = async (body) => {
             pass: config.smtpPassword
             }
         });
+
+      let link;
+      const tipo = Array.isArray(body.tipoFormulario)
+      ? body.tipoFormulario[0]?.trim().toUpperCase()
+      : body.tipoFormulario?.trim().toUpperCase();
+
+      switch (tipo) {
+        case 'CENTROS COMERCIALES O PARQUEADEROS':
+          link = `https://192.168.4.19:448/informacion/CCP/${body.id}`;
+          break;
+        case 'PERSONA JURIDICA PAGO A CONTADO':
+          link = `https://192.168.4.19:448/informacion/PJC/${body.id}`;
+          break;
+        case 'PERSONA JURIDICA PAGO A CREDITO':
+          link = `https://192.168.4.19:448/informacion/PJCR/${body.id}`;
+          break;
+        case 'PERSONA NATURAL PAGO A CONTADO':
+          link = `https://192.168.4.19:448/informacion/PNC/${body.id}`;
+          break;
+        case 'PERSONA NATURAL PAGO A CREDITO':
+          link = `https://192.168.4.19:448/informacion/PNCR/${body.id}`;
+          break;
+        default:
+          console.warn(`Tipo desconocido: ${body.tipo}`);
+      }
+
+      console.log("🟢 Tipo recibido:", tipo);
+      console.log("🟢 Link generado:", link);
+
+      /* let link;
+      const chooseType = () => {
+        if(body.tipo === 'CENTROS COMERCIALES O PARQUEADEROS'){
+          link = `https://192.168.4.19:448/informacion/CCP/${body.id}`;
+        }else if(body.tipo === 'PERSONA JURIDICA PAGO A CONTADO'){
+          link = `https://192.168.4.19:448/informacion/PJC/${body.id}`;
+        }else if(body.tipo === 'PERSONA JURIDICA PAGO A CREDITO'){
+          link = `https://192.168.4.19:448/informacion/PJCR/${body.id}`;
+        }else if(body.tipo === 'PERSONA NATURAL PAGO A CONTADO'){
+          link = `https://192.168.4.19:448/informacion/PNC/${body.id}`;
+        }else if(body.tipo === 'PERSONA NATURAL PAGO A CREDITO'){
+          link = `https://192.168.4.19:448/informacion/PNCR/${body.id}`;
+        }
+      }
+      await chooseType(); */
       const mail = {
         /* from: 'Clientes@granlangostino.net', */
         from: config.smtpEmail,
-        to: 'felipeord9@gmail.com',
+        to: 'sistemas2@granlangostino.net',
         subject: 'Nueva Solicitud de Creación',
         html: `<!DOCTYPE html>
         <html lang="en">
@@ -212,7 +263,7 @@ const sendMail = async (body) => {
                       <br/>
                       <p><strong>A continuación, encontrará un link que lo llevará a nuestra página web donde podrá
                       visualizar las solicitudes con más detalles</strong></p>
-                      <p>https://192.168.4.19:448/terceros</p>
+                      <p>${link}</p>
                       <br/>
                     </td>
                   </tr>
@@ -259,6 +310,7 @@ module.exports={
     findOne,
     remove,
     validarCliente,
+    validarClienteId,
     update,
     findCliente,
     removeByCedula,

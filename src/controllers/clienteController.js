@@ -159,6 +159,20 @@ const validar = async (req,res,next)=>{
         }
 }
 
+const validarId = async (req,res,next)=>{
+    try{
+        const{params:{id}}=req;
+        const data = await ClienteService.validarClienteId(id);
+
+        res.status(200).json({
+            message: 'OK',
+            data
+          })
+        } catch (error) {
+          next(error)
+        }
+}
+
 const deleteCliente = async(req,res,next)=>{
     try{
         const {params:{id}}=req
@@ -192,6 +206,7 @@ module.exports = {
     findOneCliente,
     deleteCliente,
     validar,
+    validarId,
     updateCliente,
     deleteByCedula,
     duo,

@@ -12,6 +12,7 @@ router
     .post('/send/mail',ClienteController.send)
     .get('/:id',ClienteController.findOneCliente)
     .get('/numero/:cedula',ClienteController.validar)
+    .get('/id/:id',ClienteController.validarId)
     .patch('/update/:id',ClienteController.updateCliente)
     .delete('/:id',ClienteController.deleteCliente)
     .delete('/delete/:cedula', ClienteController.deleteByCedula);

@@ -127,6 +127,20 @@ const findOneProveedor = async (req, res, next) => {
         }
   }
 
+const validarId = async (req,res,next)=>{
+  try{
+    const{params:{id}}=req;
+    const data = await ProveedorService.validarProveedorId(id);
+
+    res.status(200).json({
+      message: 'OK',
+      data
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const deleteProveedor = async(req,res,next)=>{
     try{
         const {params:{id}}=req
@@ -160,6 +174,7 @@ module.exports = {
     findOneProveedor,
     deleteProveedor,
     validar,
+    validarId,
     updateProveedor,
     deleteByCedula,
     send,

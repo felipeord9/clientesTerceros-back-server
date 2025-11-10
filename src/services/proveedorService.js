@@ -43,6 +43,12 @@ const validarProveedor = async (cedula)=>{
     return Proveedor
 }
 
+const validarProveedorId = async (id)=>{
+    const Proveedor = await models.Proveedores.findByPk(id)
+    if(!Proveedor) throw boom.notFound('Proveedor no encontrado')
+    return Proveedor
+}
+
 const remove = async(id)=>{
     const proveedor = findOne(id)
     ;(await proveedor).destroy(id)
@@ -55,6 +61,7 @@ const removeByCedula = async(cedula)=>{
 }
 
 const sendMail = async (body) => {
+  console.log(JSON.stringify(body))
     try{
         const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -65,10 +72,39 @@ const sendMail = async (body) => {
             pass: config.smtpPassword
             }
         });
+
+      let link;
+      const tipo = Array.isArray(body.tipoFormulario)
+      ? body.tipoFormulario[0]?.trim().toUpperCase()
+      : body.tipoFormulario?.trim().toUpperCase();
+
+      switch (tipo) {
+        case 'PROVEEDOR MCIA Y CONVENIOS PERSONA JURIDICA':
+          link = `https://192.168.4.19:448/informacion/PMJ/${body.id}`;
+          break;
+        case 'PROVEEDOR MCIA Y CONVENIOS PERSONA NATURAL':
+          link = `https://192.168.4.19:448/informacion/PMN/${body.id}`;
+          break;
+        case 'PRESTADOR DE SERVICIOS':
+          link = `https://192.168.4.19:448/informacion/PS/${body.id}`;
+          break;
+        case 'PROVEEDORES VARIOS PERSONA JURIDICA':
+          link = `https://192.168.4.19:448/informacion/PVJ/${body.id}`;
+          break;
+        case 'PROVEEDORES VARIOS PERSONA NATURAL':
+          link = `https://192.168.4.19:448/informacion/PVN/${body.id}`;
+          break;
+        default:
+          console.warn(`Tipo desconocido: ${body.tipo}`);
+      }
+
+      console.log("🟢 Tipo recibido:", tipo);
+      console.log("🟢 Link generado:", link);
+
       const mail = {
         /* from: 'Clientes@granlangostino.net', */
         from: config.smtpEmail,
-        to: 'oficialdecumplimiento@granlangostino.com',
+        to: 'sistemas2@granlangostino.net',
         subject: 'Nueva Solicitud de Creación',
         html: `<!DOCTYPE html>
         <html lang="en">
@@ -192,7 +228,7 @@ const sendMail = async (body) => {
                       <br/>
                       <p><strong>A continuación, encontrará un link que lo llevará a nuestra página web donde podrá
                       visualizar las solicitudes con más detalles</strong></p>
-                      <p>https://192.168.4.19:448/Proveedores</p>
+                      <p>${link}</p>
                       <br/>
                     </td>
                   </tr>
@@ -239,6 +275,7 @@ module.exports={
     findOne,
     remove,
     validarProveedor,
+    validarProveedorId,
     update,
     removeByCedula,
     findByCedula,
