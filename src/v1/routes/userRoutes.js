@@ -5,10 +5,10 @@ const { checkRoles } = require('../../middlewares/authHandler')
 
 const router = express.Router();
 
- router.use(
+ /* router.use(
   passport.authenticate('jwt', { session: false }), 
   checkRoles('admin')
-)
+) */
 
 router
   .get("/", UserController.findAllUsers)
