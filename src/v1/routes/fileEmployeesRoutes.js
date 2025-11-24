@@ -24,7 +24,7 @@ router.post('/', upload.fields([
     { name: 'Eps' },
     { name: 'CajaCompensacion' },
     { name: 'OtroSi' },
-    { name: 'Ingreso' },
+    { name: 'ExamenIngreso' },
     { name: 'Escolaridad' },
     { name: 'Arl' },
     { name: 'Otros' },
