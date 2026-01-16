@@ -16,6 +16,7 @@ router
     .get('/verify/:token', EmpleadoController.verifyTokenWithId)
     .post('/',EmpleadoController.createEmpleado)
     .post('/send/mail', EmpleadoController.send)
+    .post('/update/ascreated', EmpleadoController.updateAsCreated)
     .post('/correo/respuesta',EmpleadoController.correoRespuesta)
     .patch('/update/:id',EmpleadoController.updateEmpleado)
     .patch('/update/employee/:id',EmpleadoController.updateEmployee)

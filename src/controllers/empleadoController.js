@@ -31,6 +31,22 @@ const send = async (req, res, next) => {
   }
 }
 
+const updateAsCreated = async (req, res, next) => {
+  try {
+    const { body } = req
+    console.log(body)
+    const data = await EmpleadoService.updateAs(body)
+    const change = {
+      estado: body.estado,
+    }
+    const update = await EmpleadoService.update(body.id,change)
+    res.status(200).json({message:'Enviado', data, update})
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
 const verifyTokenWithId = async (req, res, next) =>{
   try{
     const { params: { token }} = req
@@ -269,6 +285,7 @@ module.exports = {
     updateEmpleado,
     updateEmployee,
     send,
+    updateAsCreated,
     correoRespuesta,
     verifyTokenWithId,
 }
