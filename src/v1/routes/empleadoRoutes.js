@@ -17,6 +17,7 @@ router
     .post('/',EmpleadoController.createEmpleado)
     .post('/send/mail', EmpleadoController.send)
     .post('/update/ascreated', EmpleadoController.updateAsCreated)
+    .post('/update/as/return', EmpleadoController.updateAsReturn)
     .post('/correo/respuesta',EmpleadoController.correoRespuesta)
     .patch('/update/:id',EmpleadoController.updateEmpleado)
     .patch('/update/employee/:id',EmpleadoController.updateEmployee)

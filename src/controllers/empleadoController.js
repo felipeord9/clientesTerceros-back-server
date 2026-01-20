@@ -47,6 +47,23 @@ const updateAsCreated = async (req, res, next) => {
   }
 }
 
+const updateAsReturn = async (req, res, next) => {
+  try {
+    const { body } = req
+    console.log(body)
+    const data = await EmpleadoService.updateRetrun(body)
+    const change = {
+      estado: body.estado,
+      returnReason: body.returnReason,
+    }
+    const update = await EmpleadoService.update(body.id,change)
+    res.status(200).json({message:'Enviado', data, update})
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
 const verifyTokenWithId = async (req, res, next) =>{
   try{
     const { params: { token }} = req
@@ -286,6 +303,7 @@ module.exports = {
     updateEmployee,
     send,
     updateAsCreated,
+    updateAsReturn,
     correoRespuesta,
     verifyTokenWithId,
 }

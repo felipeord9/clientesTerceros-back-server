@@ -175,6 +175,15 @@ const EmpleadoSchema={
         type: DataTypes.TEXT,
         allowNull: true
     },
+    review: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    returnReason:{
+        type: DataTypes.TEXT,
+        allowNull: true,
+        field: "razon_devolucion",
+    },
 };
 
 class Empleado extends Model{
