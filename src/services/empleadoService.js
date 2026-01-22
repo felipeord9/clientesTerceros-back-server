@@ -58,7 +58,7 @@ const sendMail = async (body) => {
       const payload = {
         id: body.codigo
       }
-      const token = jwt.sign(payload, config.jwtSecret, { expiresIn: "24h" })
+      const token = jwt.sign(payload, config.jwtSecret)
 
         const transporter = nodemailer.createTransport({
         host: 'smtpout.secureserver.net',
@@ -243,7 +243,7 @@ const updateAs = async (body) => {
         id: body.id
       }
       console.log(payload)
-      const token = jwt.sign(payload, config.jwtSecret, { expiresIn: "24h" })
+      const token = jwt.sign(payload, config.jwtSecret)
       console.log(token)
       const mail = {
         from: config.smtpEmail,
@@ -419,7 +419,7 @@ const updateRetrun = async (body) => {
         id: body.id
       }
       console.log(payload)
-      const token = jwt.sign(payload, config.jwtSecret, { expiresIn: "24h" })
+      const token = jwt.sign(payload, config.jwtSecret)
       console.log(token)
       const mail = {
         from: config.smtpEmail,
