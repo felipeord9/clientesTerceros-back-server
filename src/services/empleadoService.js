@@ -10,6 +10,7 @@ const find=()=>{
       include: [
         "estudios"
       ],
+      order: [["id", "DESC"]],
     })
     return Empleados
 };
