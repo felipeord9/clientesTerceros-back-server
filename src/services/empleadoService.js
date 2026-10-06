@@ -74,7 +74,7 @@ const sendMail = async (body) => {
         /* from: 'Clientes@granlangostino.net', */
         from: config.smtpEmail,
         to: 'contabilidad3@granlangostino.net',
-        cc: 'recursoshumanos2@granlangostino.com, oficialdecumplimiento@granlangostino.com',
+        cc: 'recursoshumanos2@granlangostino.com, oficialdecumplimiento@granlangostino.com, aux.recursoshumanos@granlangostino.net',
         subject: 'Nueva Solicitud',
         html: `<!DOCTYPE html>
         <html lang="en">
@@ -250,7 +250,7 @@ const updateAs = async (body) => {
         from: config.smtpEmail,
         to:'sistemas2@granlangostino.net',
         /* to: 'recursoshumanos2@granlangostino.com', */
-        /* cc: 'oficialdecumplimiento@granlangostino.com', */
+        /* cc: 'oficialdecumplimiento@granlangostino.com, aux.recursoshumanos@granlangostino.net', */
         subject: 'Nueva Creación',
         html: `<!DOCTYPE html>
         <html lang="en">
@@ -426,7 +426,7 @@ const updateRetrun = async (body) => {
         from: config.smtpEmail,
         /* to:'sistemas2@granlangostino.net', */
         to: 'recursoshumanos2@granlangostino.com',
-        cc: 'oficialdecumplimiento@granlangostino.com, contabilidad3@granlangostino.net',
+        cc: 'oficialdecumplimiento@granlangostino.com, contabilidad3@granlangostino.net, aux.recursoshumanos@granlangostino.net',
         subject: 'Devolución de empleado',
         html: `<!DOCTYPE html>
         <html lang="en">
@@ -598,7 +598,7 @@ const respuesta = async (body) => {
       /* from: 'Clientes@granlangostino.net', */
       from: config.smtpEmail,
       to: 'recursoshumanos2@granlangostino.com',
-      cc: 'contabilidad3@granlangostino.net, oficialdecumplimiento@granlangostino.com',
+      cc: 'contabilidad3@granlangostino.net, oficialdecumplimiento@granlangostino.com, aux.recursoshumanos@granlangostino.net',
       subject: 'Nuevo Cambio en su Solicitud',
       html: `<!DOCTYPE html>
       <html lang="en">

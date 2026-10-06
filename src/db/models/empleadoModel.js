@@ -29,7 +29,7 @@ const EmpleadoSchema={
     },
     segundoApellido:{
         type:DataTypes.STRING,
-        allowNull:false,
+        allowNull:true,
         field:'segundo_apellido'
     },
     primerNombre:{
@@ -184,6 +184,11 @@ const EmpleadoSchema={
         allowNull: true,
         field: "razon_devolucion",
     },
+    docLicenciaConduccion: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: "doc_licencia_conduccion",
+    }
 };
 
 class Empleado extends Model{
